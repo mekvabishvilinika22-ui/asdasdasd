@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photon — Xenon Car Lights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&family=Cormorant:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --grey: #9a9a9a;
+            --light-grey: #e8e8e8;
+            --accent: #2a2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Archivo', sans-serif;
+            font-weight: 300;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, var(--white) 70%, transparent);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+        
+        .cart {
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--black);
+            transition: all 0.3s ease;
+        }
+        
+        .cart:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+        
+        .hero-text {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .hero-text h1 {
+            font-family: 'Cormorant', serif;
+            font-size: 5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--grey);
+            margin-bottom: 3rem;
+            max-width: 400px;
+            line-height: 1.8;
+        }
+        
+        .cta {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+        
+        .cta:hover::before {
+            left: 0;
+        }
+        
+        .hero-image {
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant', serif;
+            font-size: 2rem;
+            color: var(--grey);
+            border: 1px solid var(--light-grey);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 8rem 4rem;
+            background: var(--white);
+        }
+        
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .feature:nth-child(1) { animation-delay: 0.1s; }
+        .feature:nth-child(2) { animation-delay: 0.2s; }
+        .feature:nth-child(3) { animation-delay: 0.3s; }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem;
+            border: 1px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .feature p {
+            color: var(--grey);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        
+        /* Specs Section */
+        .specs {
+            padding: 8rem 4rem;
+            background: #fafafa;
+        }
+        
+        .specs-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .specs h2 {
+            font-family: 'Cormorant', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        
+        .specs-list {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--light-grey);
+        }
+        
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-label {
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        
+        .spec-value {
+            color: var(--grey);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 12rem 4rem;
+            text-align: center;
+            background: var(--white);
+        }
+        
+        .cta-section h2 {
+            font-family: 'Cormorant', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        
+        /* Locations Section */
+        .locations {
+            padding: 8rem 4rem;
+            background: var(--white);
+        }
+        
+        .location-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+        
+        .location-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .location-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border: 1px solid var(--light-grey);
+        }
+        
+        .location-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #f5f5f5;
+        }
+        
+        .location-map {
+            width: 100%;
+            height: 250px;
+            border: 1px solid var(--light-grey);
+            position: fixed;
+            right: -600px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 600px;
+            height: 400px;
+            z-index: 2000;
+            transition: right 0.4s ease;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .location-map.active {
+            right: 0;
+        }
+        .location-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border: 1px solid var(--light-grey);
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .location-image:hover {
+            opacity: 0.8;
+        }
+        .close-map {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 2001;
+        }
+
+
+
+        .location-info {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.location-address {
+    font-size: 0.95rem;
+    color: var(--grey);
+    margin-bottom: 0.5rem;
+}
+
+.location-stock {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.location-stock span {
+    font-weight: 500;
+    color: var(--black);
+}
+        
+        /* Footer */
+        footer {
+            padding: 4rem;
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        footer p {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 3.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .location-item {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .location-image,
+            .location-map {
+                height: 400px;
+            }
+            
+            nav {
+                padding: 2rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Photon</div>
+        <div class="cart">Cart (0)</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Illuminate the road ahead</h1>
+                <p>Premium xenon car lights engineered for superior brightness, longevity, and style. Transform your driving experience.</p>
+                <a href="#buy" class="cta">Order Now</a>
+            </div>
+            <div class="hero-image">
+                <div class="product-image">Product Image</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>6000K Brightness</h3>
+                <p>Crystal-clear white light that cuts through darkness with unparalleled clarity</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">◯</div>
+                <h3>50,000 Hour Life</h3>
+                <p>Built to last with premium components and rigorous quality testing</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">◐</div>
+                <h3>Plug & Play</h3>
+                <p>Simple installation compatible with most modern vehicles</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specs Section -->
+    <section class="specs">
+        <div class="specs-container">
+            <h2>Specifications</h2>
+            <div class="specs-list">
+                <div class="spec-item">
+                    <span class="spec-label">Color Temperature</span>
+                    <span class="spec-value">6000K Pure White</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Luminous Flux</span>
+                    <span class="spec-value">3200 Lumens</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Lifespan</span>
+                    <span class="spec-value">50,000 Hours</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Power</span>
+                    <span class="spec-value">35W</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Voltage</span>
+                    <span class="spec-value">12V DC</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Warranty</span>
+                    <span class="spec-value">2 Years</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="locations">
+        <div class="location-container">
+            <!-- Tbilisi -->
+            <div class="location-item">
+                <div class="location-image" onclick="openMap('tbilisi-map')">
+                  <img src="./photon images/tbilisi.jpg" alt="tbilisi">
+                </div>
+                <div class="location-map" id="tbilisi-map">
+                     <button class="close-map" onclick="closeMap('tbilisi-map')">×</button>
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23908.15288474047!2d44.80751!3d41.7151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440cd7e64f626b%3A0x4f907964122d4ac2!2sTbilisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1234567890"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+            <div class="location-info">
+                <p class="location-address">123 Rustaveli Avenue, Tbilisi, Georgia</p>
+                <p class="location-stock">Available: <span>47 units</span></p>
+            </div>
+            
+            <!-- Kutaisi -->
+            <div class="location-item">
+                <div class="location-image" onclick="openMap('kutaisi-map')">
+                    <img src="./photon images/kutaisi.png" alt="Kutaisi">
+                </div>
+                <div class="location-map" id="kutaisi-map">
+                     <button class="close-map" onclick="closeMap('kutaisi-map')">×</button>
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23908.15288474047!2d42.6905!3d42.2679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x405c8b0e0b0b0b0b%3A0x1234567890!2sKutaisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1234567890"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <div class="location-info">
+                    <p class="location-address">56 David Agmashenebeli St, Kutaisi, Georgia</p>
+                    <p class="location-stock">Available: <span>32 units</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Photon. All Rights Reserved.</p>
+    </footer>
+    <script>
+        function openMap(mapId) {
+            // Close all maps first
+            document.querySelectorAll('.location-map').forEach(map => {
+                map.classList.remove('active');
+            });
+            // Open the clicked map
+            document.getElementById(mapId).classList.add('active');
+        }
+
+        function closeMap(mapId) {
+            document.getElementById(mapId).classList.remove('active');
+        }
+
+        // Close maps on any scroll
+        window.addEventListener('scroll', function() {
+            document.querySelectorAll('.location-map').forEach(map => {
+                map.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
